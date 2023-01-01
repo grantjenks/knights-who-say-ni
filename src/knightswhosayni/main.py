@@ -16,7 +16,3 @@ def main():
 
     if args.command == 'transform':
         transform(args.src)
-
-
-if __name__ == '__main__':
-    main()

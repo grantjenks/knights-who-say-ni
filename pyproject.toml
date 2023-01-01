@@ -21,6 +21,9 @@ classifiers = [
 ]
 dynamic = ["version"]
 
+[project.scripts]
+knightswhosayni = "knightswhosayni.main:main"
+
 [project.urls]
 Documentation = "https://grantjenks.com/docs/knightswhosayni/"
 Funding = "https://gum.co/knightswhosayni"
