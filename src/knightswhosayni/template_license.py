@@ -24,7 +24,7 @@ def get_value_from_license_file(prefix, module, key):
     # TODO: This ^^ won't work! The license file should go in the consumer.
     config = configparser.ConfigParser()
     config.read(path)
-    section config[prefix.rstrip('_')]
+    section = config[prefix.rstrip('_')]
     value = section[key]
     return value
 
