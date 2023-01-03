@@ -1,3 +1,31 @@
+"""Knights Who Say Ni!
+
+TODO
+
+* Current "import foo.__license__" allows easy bypassing with sys.modules.
+  Would be stronger to inject the license check code directly into the files.
+
+from foo import __license__
+__license_user = __license__.get_user()
+__license_code = __license__.get_code()
+__license_key = '__NI_LICENSE_KEY__'
+__license_keykey = __license__.UUID(__license_key)
+__license_pairs = zip(__license_user, __license_code)
+__license_xor = bytes(u ^ c for u, c in __license_pairs)
+if __license_xor != __license_key:
+    raise __license__.LicenseError(__license__.message)
+
+^-- This won't work either. It still allows copy/pasting a solution.
+The license key must be embedded in every encoded file and the check done there.
+
+* Provide more instructions on failure.
+
+* Support generating keys! (untested)
+
+* Reserve last two bytes for license expiry -- recorded in dates since epoch
+  with any number over 100 years considered "forever".
+"""
+
 import argparse
 import glob
 import hashlib
