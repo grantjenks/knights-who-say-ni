@@ -13,6 +13,7 @@ TODO
 """
 
 import argparse
+import base64
 import glob
 import hashlib
 import itertools
@@ -63,7 +64,8 @@ def transform(src_dir, name, prefix):
         license_text
         .replace('__NI_MODULE__', name)
         .replace('__NI_PREFIX__', prefix)
-        .replace('__NI_LICENSE_KEY__', key)
+        .replace('__NI_PREFIX_LOWER__', prefix.lower())
+        .replace('__NI_PREFIX_STRIP__', prefix.rstrip('_'))
     )
     license_path = (src_dir / name / '__license__.py')
     license_path.write_text(license_text)
@@ -95,20 +97,21 @@ def transform(src_dir, name, prefix):
     for path in src_dir.rglob('*.py'):
         if path == init_path:
             continue
-        text = path.read_text()
+        text = path.read_bytes()
         binary, _ = ninini_encode(text, digest)
         path.write_bytes(coding + binary)
 
 
-def ninini_encode(text, digest):
-    offsets = itertools.cycle(digest)
+def ninini_encode(binary, key_bytes):
+    offsets = itertools.cycle(key_bytes)
+    bin64 = base64.b64encode(binary)
     chars = []
-    for char, offset in zip(text, offsets):
-        ord_char = ord(char)
+    for ord_char, offset in zip(bin64, offsets):
         if 32 <= ord_char <= 126:
             code = (ord_char + offset - 32) % 95 + 32
-            char = chr(code)
-        chars.append(char)
-    enc_text = ''.join(chars)
-    binary = enc_text.encode('utf8')
-    return binary, len(text)
+        chars.append(code)
+    enc_bytes = bytes(chars)
+    offsets = range(0, len(bin64), 79)
+    lines = [enc_bytes[offset:offset + 79] + b'\n' for offset in offsets]
+    output = b''.join(lines)
+    return output
