@@ -7,7 +7,8 @@ TODO
 * How to provide instructions on failure?
 
 * Reserve last two bytes for license expiry -- recorded in dates since epoch
-  with any number over 100 years considered "forever".
+  with any number over 100 years considered "forever". For the license expiry,
+  still need to embed that check in the source files.
 """
 
 import argparse
