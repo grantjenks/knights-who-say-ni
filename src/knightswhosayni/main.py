@@ -69,16 +69,14 @@ def transform(src_dir, name, prefix):
     # Encode all files (except __init__.py)
     key = os.environ['KNIGHTS_WHO_SAY_NI_KEY']
     key_bytes = uuid.UUID(key).bytes
-    coding = f'# coding=ninini-{name}\n'.encode()
+    xor_bytes = [x ^ y for x, y in zip(init_digest, key_bytes)]
+    coding = f'# coding=ninini-{name}\n"""\n'.encode()
     for path in src_dir.rglob('*.py'):
         if path == init_path:
             continue
         text = path.read_bytes()
-        binary, _ = ninini_encode(text, key_bytes)
-        path.write_bytes(coding + binary)
-
-    print(init_digest)
-    print(key_bytes)
+        binary = ninini_encode(text, xor_bytes)
+        path.write_bytes(coding + binary + b'"""\n')
 
 
 def ninini_encode(binary, key_bytes):
