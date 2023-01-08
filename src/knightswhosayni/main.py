@@ -2,8 +2,6 @@
 
 TODO
 
-* Support generating keys! (untested)
-
 * How to provide instructions on failure?
 
 * Reserve last two bytes for license expiry -- recorded in dates since epoch
@@ -33,10 +31,15 @@ def main():
     parser_transform.add_argument('name')
     parser_transform.add_argument('prefix')
 
+    parser_keygen = subparsers.add_parser('keygen')
+    parser_keygen.add_argument('license_user')
+
     args = parser.parse_args()
 
     if args.command == 'transform':
         transform(args.src, args.name, args.prefix)
+    if args.command == 'keygen':
+        keygen(args.license_user)
 
 
 def transform(src_dir, name, prefix):
@@ -91,3 +94,15 @@ def ninini_encode(binary, key_bytes):
     lines = [enc_bytes[offset:offset + 79] + b'\n' for offset in offsets]
     output = b''.join(lines)
     return output
+
+
+def keygen(license_user):
+    key = os.environ['KNIGHTS_WHO_SAY_NI_KEY']
+    key_bytes = uuid.UUID(key).bytes
+
+    user_bytes = license_user.encode('utf-8')
+    user_digest = hashlib.sha256(user_bytes).digest()
+
+    code_bytes = bytes(x ^ y for x, y in zip(key_bytes, user_digest))
+    code_uuid = uuid.UUID(bytes=code_bytes)
+    print(code_uuid)
