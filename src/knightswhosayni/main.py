@@ -62,7 +62,10 @@ def transform(src_dir, name, prefix):
     # Inject codecs code into __init__.py
     init_path = (src_dir / name / '__init__.py')
     init_text = init_path.read_text()
-    init_text += '\n\n' + init_template
+    init_lines = init_text.split('\n')
+    index = init_lines.index('"""') + 1
+    init_lines.insert(index, '\n\n' + init_template)
+    init_text = '\n'.join(init_lines)
     init_path.write_text(init_text)
 
     # Compute sha256 of __init__.py
