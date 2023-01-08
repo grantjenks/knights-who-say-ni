@@ -1,10 +1,12 @@
 def __license_setup():  # pragma: no cover
+    import base64
     import codecs
     import configparser
     import contextlib
     import hashlib
     import itertools
     import os
+    import uuid
 
     class LicenseError(SystemExit):
         pass
@@ -46,15 +48,18 @@ def __license_setup():  # pragma: no cover
     code_bytes = uuid.UUID(license_code).bytes
 
     xyz = zip(init_digest, user_digest, code_bytes)
-    key_bytes = [x ^ y ^ z for x, y, z in xyz]
+    xor_bytes = [x ^ y ^ z for x, y, z in xyz]
 
-    def ninini_decode(binary):
+    def ninini_decode(binary, *args, **kwargs):
         binary = bytes(binary)
         lines = binary.split(b'\n')
         del lines[0]
-        enc_bytes = = b''.join(lines)
+        del lines[0]
+        del lines[-1]
+        del lines[-1]
+        enc_bytes = b''.join(lines)
         chars = []
-        offsets = itertools.cycle(key_bytes)
+        offsets = itertools.cycle(xor_bytes)
         for ord_char, offset in zip(enc_bytes, offsets):
             if 32 <= ord_char <= 126:
                 code = (ord_char - offset - 32) % 95 + 32
