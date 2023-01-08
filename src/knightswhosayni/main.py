@@ -1,5 +1,7 @@
 """Knights Who Say Ni!
 
+$ knightswhosayni transform src django_codemirror6 DJANGO_CODEMIRROR6_
+
 TODO
 
 * How to provide instructions on failure?
