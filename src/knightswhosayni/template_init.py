@@ -1,4 +1,4 @@
-def __license_setup():
+def __license_setup():  # pragma: no cover
     import codecs
     import configparser
     import contextlib
