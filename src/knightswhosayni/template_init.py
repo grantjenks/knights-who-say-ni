@@ -6,6 +6,9 @@ def __license_setup():
     import itertools
     import os
 
+    class LicenseError(SystemExit):
+        pass
+
     def get_value_from_license_file(prefix, key):
         config = configparser.ConfigParser()
         config.read('__NI_PREFIX_LOWER__license.ini')
@@ -20,7 +23,7 @@ def __license_setup():
             return os.environ['__NI_PREFIX__LICENSE_USER']
         with contextlib.suppress(Exception):
             return get_value_from_license_file('LICENSE_USER')
-        raise LicenseError('license user is not set')
+        raise LicenseError('Error: license user is not set')
 
     def get_code():
         with contextlib.suppress(Exception):
@@ -29,7 +32,7 @@ def __license_setup():
             return os.environ['__NI_PREFIX__LICENSE_CODE']
         with contextlib.suppress(Exception):
             return get_value_from_license_file('LICENSE_CODE')
-        raise LicenseError('license code is not set')
+        raise LicenseError('Error: license code is not set')
 
     with open(__file__, 'rb') as reader:
         hash_obj = hashlib.file_digest(reader, 'sha256')
