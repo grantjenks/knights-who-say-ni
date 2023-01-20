@@ -1,6 +1,7 @@
 def __license_setup():  # pragma: no cover
     import base64
     import codecs
+    import datetime
     import configparser
     import contextlib
     import hashlib
@@ -47,8 +48,16 @@ def __license_setup():  # pragma: no cover
     license_code = get_code()
     code_bytes = uuid.UUID(license_code).bytes
 
+    expiry_code = [x ^ y for x, y in zip(user_digest[-2:], code_bytes[-2:])]
+    expiry_days = expiry_code[0] * 256 + expiry_code[1]
+    delta = datetime.date.today() - datetime.date(1970, 1, 1)
+    days = delta.days
+    if expiry_days != 0 and days > expiry_days:
+        raise LicenseError('Error: license is expired')
+
     xyz = zip(init_digest, user_digest, code_bytes)
     xor_bytes = [x ^ y ^ z for x, y, z in xyz]
+    del xor_bytes[-2:]
 
     def ninini_decode(binary, *args, **kwargs):
         binary = bytes(binary)

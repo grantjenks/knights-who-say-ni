@@ -6,15 +6,12 @@ TODO
 
 * How to provide instructions on failure?
 
-* Reserve last two bytes for license expiry -- recorded in dates since epoch
-  with any number over 100 years considered "forever". For the license expiry,
-  still need to embed that check in the source files.
-
 * Provide reusable GitHub workflow for testing and releasing code.
 """
 
 import argparse
 import base64
+import datetime as dt
 import glob
 import hashlib
 import itertools
@@ -37,13 +34,14 @@ def main():
 
     parser_keygen = subparsers.add_parser('keygen')
     parser_keygen.add_argument('license_user')
+    parser_keygen.add_argument('days', default=0, nargs='?', type=int)
 
     args = parser.parse_args()
 
     if args.command == 'transform':
         transform(args.src, args.name, args.prefix)
     if args.command == 'keygen':
-        keygen(args.license_user)
+        keygen(args.license_user, args.days)
 
 
 def transform(src_dir, name, prefix):
@@ -77,6 +75,7 @@ def transform(src_dir, name, prefix):
     key = os.environ['KNIGHTS_WHO_SAY_NI_KEY']
     key_bytes = uuid.UUID(key).bytes
     xor_bytes = [x ^ y for x, y in zip(init_digest, key_bytes)]
+    del xor_bytes[-2:]
     coding = f'# coding=ninini-{name}\n"""\n'.encode()
     for path in src_dir.rglob('*.py'):
         if path == init_path:
@@ -101,13 +100,19 @@ def ninini_encode(binary, key_bytes):
     return output
 
 
-def keygen(license_user):
+def keygen(license_user, days=0):
+    if days == 0:
+        expiry_days = 0
+    else:
+        expiry_days = (dt.date.today() - dt.date(1970, 1, 1)).days + days
     key = os.environ['KNIGHTS_WHO_SAY_NI_KEY']
     key_bytes = uuid.UUID(key).bytes
 
     user_bytes = license_user.encode('utf-8')
     user_digest = hashlib.sha256(user_bytes).digest()
 
-    code_bytes = bytes(x ^ y for x, y in zip(key_bytes, user_digest))
-    code_uuid = uuid.UUID(bytes=code_bytes)
+    code_bytes = bytearray(x ^ y for x, y in zip(key_bytes, user_digest))
+    code_bytes[-2] = user_digest[-2] ^ (expiry_days // 256)
+    code_bytes[-1] = user_digest[-1] ^ (expiry_days % 256)
+    code_uuid = uuid.UUID(bytes=bytes(code_bytes))
     print(code_uuid)
