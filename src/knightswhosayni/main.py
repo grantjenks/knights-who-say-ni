@@ -1,6 +1,9 @@
 """Knights Who Say Ni!
 
+$ export KNIGHTS_WHO_SAY_NI_KEY=$(python -c "import uuid; print(uuid.uuid4())")
+$ export KNIGHTS_WHO_SAY_NI_KEY=6f42e628-0aa4-45da-ab41-e734e7e2b1c8
 $ knightswhosayni transform src django_codemirror6 DJANGO_CODEMIRROR6_
+$ knightswhosayni keygen grant.jenks@gmail.com 7
 
 TODO
 
