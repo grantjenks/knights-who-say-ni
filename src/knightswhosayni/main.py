@@ -7,6 +7,28 @@ $ knightswhosayni keygen grant.jenks@gmail.com 7
 
 TODO
 
+* Use license key as salt for username hash
+
+* Workflow for sale:
+
+1. Visit PyPI, click link to buy license.
+
+2. Visit popcountsoftware.com/django-rrweb/ -- click link to buy
+
+3. Visit gumroad.com/l/django-rrweb -- pay and get redirected
+   https://app.gumroad.com/api#resource-subscriptions
+
+4. Visit popcountsoftware.com/django-rrweb/ and receive license
+   https://help.gumroad.com/article/154-custom-delivery-products
+
+* Workflow for trial:
+
+1. Visit PyPI, click link to buy license.
+
+2. Visit popcountsoftware.com/django-rrweb/ -- click 7-day trial
+
+3. Redirect to popcountsoftware.com/django-rrweb/ and receive license
+
 * Provide reusable GitHub workflow for testing and releasing code.
 
 * Generate Python file for import like:
@@ -19,20 +41,6 @@ builtins.DJANGO_CODEMIRROR6_LICENSE_USER = 'grant.jenks@gmail.com'
 builtins.DJANGO_CODEMIRROR6_LICENSE_CODE = 'b4c72750-99c3-313b-67d3-38b8c17c9340'
 
 import django_codemirror6
-
-# Copyright  2023  Grant Jenks
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
 ```
 
 ```python
