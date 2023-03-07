@@ -7,7 +7,7 @@ $ knightswhosayni keygen grant.jenks@gmail.com 7
 
 TODO
 
-* Use license key as salt for username hash
+* Generate real keys in web form for trial
 
 * Workflow for sale:
 
@@ -21,35 +21,10 @@ TODO
 4. Visit popcountsoftware.com/django-rrweb/ and receive license
    https://help.gumroad.com/article/154-custom-delivery-products
 
-* Workflow for trial:
-
-1. Visit PyPI, click link to buy license.
-
-2. Visit popcountsoftware.com/django-rrweb/ -- click 7-day trial
-
-3. Redirect to popcountsoftware.com/django-rrweb/ and receive license
+* Use license key as salt for username hash
 
 * Provide reusable GitHub workflow for testing and releasing code.
 
-* Generate Python file for import like:
-
-```python
-# django_codemirror6_license.py
-import builtins
-
-builtins.DJANGO_CODEMIRROR6_LICENSE_USER = 'grant.jenks@gmail.com'
-builtins.DJANGO_CODEMIRROR6_LICENSE_CODE = 'b4c72750-99c3-313b-67d3-38b8c17c9340'
-
-import django_codemirror6
-```
-
-```python
-# my_code.py
-
-from django_codemirror6_license import django_codemirror6
-
-...
-```
 """
 
 import argparse
