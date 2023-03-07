@@ -1,10 +1,90 @@
-<!doctype html>
+{% load static %}
+<!DOCTYPE html>
 <html>
   <head>
-    <title>{{ project.name }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ key.project.name }}</title>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
   </head>
   <body>
-    <h1>{{ project.name }}</h1>
-    <p>Buy a license for {{ project.name }}.</p>
+    <header>
+      <nav>
+        <a href="/"><img alt="Knights Who Say Ni" src="{% static 'knightswhosayni.png' %}" height="80"></a>
+        <ul>
+          <li>{{ key.project.name }}</li>
+        </ul>
+      </nav>
+      {% if license %}
+        <h1>Congratulations! Software License for {{ key.project.name }}</h1>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>License</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>User</td>
+              <td>{{ license.user }}</td>
+            </tr>
+            <tr>
+              <td>Code</td>
+              <td>{{ license.code }}</td>
+            </tr>
+            <tr>
+              <td>Days</td>
+              <td>{% if license.days == 0 %}∞{% else %}{{ license.days }}{% endif %}</td>
+            </tr>
+          </tbody>
+        </table>
+        <section>
+        <pre style="text-align: left">
+          <code>
+# {{ key.prefix|lower }}license.py
+import builtins
+
+builtins.{{ key.prefix }}LICENSE_USER = '{{ license.user }}'
+builtins.{{ key.prefix }}LICENSE_CODE = '{{ license.code }}'
+
+import {{ key.project.module_name }}  # isort: skip
+          </code>
+          <code>
+# my_code.py
+from {{ key.prefix|lower }}license import {{ key.project.module_name }}
+          </code>
+        </pre>
+        </section>
+        <hr>
+      {% endif %}
+      <h1>Buy a Software License for {{ key.project.name }}</h1>
+      <p>What, this costs money? Yes, but it's quick and painless.</p>
+      <br>
+      <p>
+        <a href="#trial"><i>Get a Trial</i></a>
+        <a href="{{ key.gumroad_link }}"><b>Buy a License →</b></a>
+      </p>
+    </header>
+    <main>
+      <hr>
+      <section>
+        <h1>Get a Trial License for {{ key.project.name }}</h1>
+        <p id="trial"></p>
+        <form class="form" method="POST" action="{{ url }}">
+          {% csrf_token %}
+          <div class="form-group">
+            <label class="form-label" for="user">User:</label>
+            <input class="form-input" type="text" name="user" id="user">
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </div>
+        </form>
+      </section>
+    </main>
+    <footer class="footer">
+      <p>&copy; 2023 {{ key.project.name }}</p>
+    </footer>
   </body>
 </html>

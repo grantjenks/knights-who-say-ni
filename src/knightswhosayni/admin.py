@@ -3,15 +3,15 @@ from .models import Project, Key, License
 
 
 class ProjectAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['modify_time', 'name', 'slug']
 
 
 class KeyAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['modify_time', 'project', 'prefix']
 
 
 class LicenseAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['modify_time', 'user', 'days']
 
 
 admin.site.register(Project, ProjectAdmin)
