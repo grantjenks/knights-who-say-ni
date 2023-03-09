@@ -2,11 +2,11 @@
 
 Ni! Ni! Ni!
 
-1. Send me an email with your username.
+1. Visit software license page.
 
 2. Give me a shrubbery i.e. pay up.
 
-3. Receive license code by email.
+3. Receive license code.
 
 4. Configure software with username and license code.
 
