@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from .forms import UserForm
 from .models import Key, License, Project
@@ -29,3 +30,8 @@ def buy_license(request,  key):
         'knightswhosayni/project.html',
         locals(),
     )
+
+
+def gumroad_webhook(request):
+    text = f'{dict(request.GET)!r}\n{dict(request.POST)!r}'
+    return HttpResponse(text, content_type="text/plain")
