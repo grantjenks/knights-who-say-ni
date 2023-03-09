@@ -36,6 +36,7 @@ import itertools
 import os
 import pathlib
 import random
+import requests
 import uuid
 
 
@@ -54,12 +55,26 @@ def main():
     parser_keygen.add_argument('license_user')
     parser_keygen.add_argument('days', default=0, nargs='?', type=int)
 
+    parser_setup_gumroad = subparsers.add_parser('setup-gumroad')
+    parser_setup_gumroad.add_argument('post_url')
+
+    parser_list_gumroad = subparsers.add_parser('list-gumroad')
+
+    parser_delete_gumroad = subparsers.add_parser('delete-gumroad')
+    parser_delete_gumroad.add_argument('resource_id')
+
     args = parser.parse_args()
 
     if args.command == 'transform':
         transform(args.src, args.name, args.prefix)
     if args.command == 'keygen':
         keygen(args.license_user, args.days)
+    if args.command == 'setup-gumroad':
+        setup_gumroad(args.post_url)
+    if args.command == 'list-gumroad':
+        list_gumroad()
+    if args.command == 'delete-gumroad':
+        delete_gumroad(args.resource_id)
 
 
 def transform(src_dir, name, prefix):
@@ -134,3 +149,36 @@ def keygen(license_user, days=0):
     code_bytes[-1] = user_digest[-1] ^ (expiry_days % 256)
     code_uuid = uuid.UUID(bytes=bytes(code_bytes))
     print(code_uuid)
+
+
+def setup_gumroad(post_url='https://smee.io/WzrHSiR2F6G6mzQ'):
+    endpoint = 'https://api.gumroad.com/v2/resource_subscriptions'
+    payload = {
+        'access_token': os.environ['GUMROAD_ACCESS_TOKEN'],
+        'resource_name': 'sale',
+        'post_url': post_url,
+    }
+    response = requests.put(endpoint, data=payload)
+    assert response.status_code == 200
+    print(response.json())
+
+
+def list_gumroad():
+    endpoint = 'https://api.gumroad.com/v2/resource_subscriptions'
+    payload = {
+        'access_token': os.environ['GUMROAD_ACCESS_TOKEN'],
+        'resource_name': 'sale',
+    }
+    response = requests.get(endpoint, params=payload)
+    assert response.status_code == 200
+    print(response.json())
+
+
+def delete_gumroad(resource_id='FCRwA68PnvnWfUfgkfGlEA=='):
+    endpoint = f'https://api.gumroad.com/v2/resource_subscriptions/{resource_id}'
+    payload = {
+        'access_token': os.environ['GUMROAD_ACCESS_TOKEN'],
+    }
+    response = requests.delete(endpoint, data=payload)
+    assert response.status_code == 200
+    print(response.json())
