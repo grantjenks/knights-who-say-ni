@@ -36,8 +36,6 @@ TODO
 4. Visit popcountsoftware.com/django-rrweb/ and receive license
    https://help.gumroad.com/article/154-custom-delivery-products
 
-* Use license key as salt for username hash
-
 * Provide reusable GitHub workflow for testing and releasing code.
 
 """
@@ -55,6 +53,8 @@ import pprint
 import random
 import requests
 import uuid
+
+from . import utils
 
 pprint40 = functools.partial(pprint.pprint, width=40)
 
@@ -151,21 +151,9 @@ def ninini_encode(binary, key_bytes):
 
 
 def keygen(license_user, days=0):
-    if days == 0:
-        expiry_days = 0
-    else:
-        expiry_days = (dt.date.today() - dt.date(1970, 1, 1)).days + days
     key = os.environ['KNIGHTS_WHO_SAY_NI_KEY']
-    key_bytes = uuid.UUID(key).bytes
-
-    user_bytes = license_user.encode('utf-8')
-    user_digest = hashlib.sha256(user_bytes).digest()
-
-    code_bytes = bytearray(x ^ y for x, y in zip(key_bytes, user_digest))
-    code_bytes[-2] = user_digest[-2] ^ (expiry_days // 256)
-    code_bytes[-1] = user_digest[-1] ^ (expiry_days % 256)
-    code_uuid = uuid.UUID(bytes=bytes(code_bytes))
-    pprint40(code_uuid)
+    code_uuid = utils.keygen(key, license_user, days)
+    print(code_uuid)
 
 
 def setup_gumroad(post_url):

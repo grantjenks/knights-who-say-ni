@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from .forms import UserForm
 from .models import Key, License, Project
+from .utils import keygen
 
 
 def view_project(request, project_slug, key_slug):
@@ -20,10 +21,11 @@ def buy_license(request,  key):
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
-            user = form.cleaned_data['user']
-            code = 'foo'
+            license_user = form.cleaned_data['user']
             days = 7
-            license = License(key=key, user=user, code=code, days=days)
+            code_uuid = keygen(key.value, license_user, days)
+            code = str(code_uuid)
+            license = License(key=key, user=license_user, code=code, days=days)
             license.save()
     return render(
         request,
