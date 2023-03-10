@@ -4,6 +4,21 @@ $ export KNIGHTS_WHO_SAY_NI_KEY=$(python -c "import uuid; print(uuid.uuid4())")
 $ export KNIGHTS_WHO_SAY_NI_KEY=6f42e628-0aa4-45da-ab41-e734e7e2b1c8
 $ knightswhosayni transform src django_codemirror6 DJANGO_CODEMIRROR6_
 $ knightswhosayni keygen grant.jenks@gmail.com 7
+$ knightswhosayni setup-gumroad https://smee.io/WzrHSiR2F6G6mzQ
+{'resource_subscription': {'id': 'Ufqct5DQzP0s8w70vqOOCw==',
+                           'post_url': 'https://smee.io/WzrHSiR2F6G6mzQ',
+                           'resource_name': 'sale'},
+ 'success': True}
+$ knightswhosayni list-gumroad
+{'resource_subscriptions': [{'id': 'Ufqct5DQzP0s8w70vqOOCw==',
+                             'post_url': 'https://smee.io/WzrHSiR2F6G6mzQ',
+                             'resource_name': 'sale'}],
+ 'success': True}
+$ knightswhosayni delete-gumroad Ufqct5DQzP0s8w70vqOOCw==
+{'message': 'The resource_subscription '
+            'was deleted successfully.',
+ 'success': True}
+
 
 TODO
 
@@ -30,14 +45,18 @@ TODO
 import argparse
 import base64
 import datetime as dt
+import functools
 import glob
 import hashlib
 import itertools
 import os
 import pathlib
+import pprint
 import random
 import requests
 import uuid
+
+pprint40 = functools.partial(pprint.pprint, width=40)
 
 
 def main():
@@ -50,31 +69,29 @@ def main():
     parser_transform.add_argument('src')
     parser_transform.add_argument('name')
     parser_transform.add_argument('prefix')
+    parser_transform.set_defaults(func=transform)
 
     parser_keygen = subparsers.add_parser('keygen')
     parser_keygen.add_argument('license_user')
     parser_keygen.add_argument('days', default=0, nargs='?', type=int)
+    parser_keygen.set_defaults(func=keygen)
 
     parser_setup_gumroad = subparsers.add_parser('setup-gumroad')
     parser_setup_gumroad.add_argument('post_url')
+    parser_setup_gumroad.set_defaults(func=setup_gumroad)
 
     parser_list_gumroad = subparsers.add_parser('list-gumroad')
+    parser_list_gumroad.set_defaults(func=list_gumroad)
 
     parser_delete_gumroad = subparsers.add_parser('delete-gumroad')
     parser_delete_gumroad.add_argument('resource_id')
+    parser_delete_gumroad.set_defaults(func=delete_gumroad)
 
     args = parser.parse_args()
-
-    if args.command == 'transform':
-        transform(args.src, args.name, args.prefix)
-    if args.command == 'keygen':
-        keygen(args.license_user, args.days)
-    if args.command == 'setup-gumroad':
-        setup_gumroad(args.post_url)
-    if args.command == 'list-gumroad':
-        list_gumroad()
-    if args.command == 'delete-gumroad':
-        delete_gumroad(args.resource_id)
+    kwargs = vars(args)
+    del kwargs['command']
+    func = kwargs.pop('func')
+    func(**kwargs)
 
 
 def transform(src_dir, name, prefix):
@@ -148,10 +165,10 @@ def keygen(license_user, days=0):
     code_bytes[-2] = user_digest[-2] ^ (expiry_days // 256)
     code_bytes[-1] = user_digest[-1] ^ (expiry_days % 256)
     code_uuid = uuid.UUID(bytes=bytes(code_bytes))
-    print(code_uuid)
+    pprint40(code_uuid)
 
 
-def setup_gumroad(post_url='https://smee.io/WzrHSiR2F6G6mzQ'):
+def setup_gumroad(post_url):
     endpoint = 'https://api.gumroad.com/v2/resource_subscriptions'
     payload = {
         'access_token': os.environ['GUMROAD_ACCESS_TOKEN'],
@@ -160,7 +177,7 @@ def setup_gumroad(post_url='https://smee.io/WzrHSiR2F6G6mzQ'):
     }
     response = requests.put(endpoint, data=payload)
     assert response.status_code == 200
-    print(response.json())
+    pprint40(response.json())
 
 
 def list_gumroad():
@@ -171,14 +188,14 @@ def list_gumroad():
     }
     response = requests.get(endpoint, params=payload)
     assert response.status_code == 200
-    print(response.json())
+    pprint40(response.json())
 
 
-def delete_gumroad(resource_id='FCRwA68PnvnWfUfgkfGlEA=='):
+def delete_gumroad(resource_id):
     endpoint = f'https://api.gumroad.com/v2/resource_subscriptions/{resource_id}'
     payload = {
         'access_token': os.environ['GUMROAD_ACCESS_TOKEN'],
     }
     response = requests.delete(endpoint, data=payload)
     assert response.status_code == 200
-    print(response.json())
+    pprint40(response.json())
