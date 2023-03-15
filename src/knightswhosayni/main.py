@@ -22,22 +22,13 @@ $ knightswhosayni delete-gumroad Ufqct5DQzP0s8w70vqOOCw==
 
 TODO
 
-* Generate real keys in web form for trial
+* If the sale webhook hasn't triggered yet then post a waiting message.
 
-* Workflow for sale:
-
-1. Visit PyPI, click link to buy license.
-
-2. Visit popcountsoftware.com/django-rrweb/ -- click link to buy
-
-3. Visit gumroad.com/l/django-rrweb -- pay and get redirected
-   https://app.gumroad.com/api#resource-subscriptions
-
-4. Visit popcountsoftware.com/django-rrweb/ and receive license
-   https://help.gumroad.com/article/154-custom-delivery-products
+* If the sale occurred more than an hour ago, then post contact info.
 
 * Provide reusable GitHub workflow for testing and releasing code.
 
+* Add license legal details to template.
 """
 
 import argparse

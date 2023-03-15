@@ -61,27 +61,26 @@ from {{ key.prefix|lower }}license import {{ key.project.module_name }}
       <h1>Buy a Software License for {{ key.project.name }}</h1>
       <p>What, this costs money? Yes, but it's quick and painless.</p>
       <br>
-      <p>
-        <a href="#trial"><i>Get a Trial</i></a>
-        <a href="{{ key.gumroad_link }}"><b>Buy a License →</b></a>
-      </p>
+      <form class="form" method="POST" action="{{ url }}" style="max-width: 400px; margin: 0 auto">
+        {% csrf_token %}
+        <div class="form-group">
+          <label class="form-label" for="user">User:</label>
+          <input class="form-input" type="text" name="user" id="user">
+        </div>
+        <div class="form-group">
+          <button type="submit" name="buy" style="width: 100%">
+            Buy a License →
+          </button>
+        </div>
+        <div class="form-group">
+          <button type="submit" name="trial" style="width: 100%; background-color: var(--color-bg); color: var(--color-link)">
+            Get a Trial
+          </button>
+        </div>
+      </form>
     </header>
     <main>
       <hr>
-      <section>
-        <h1>Get a Trial License for {{ key.project.name }}</h1>
-        <p id="trial"></p>
-        <form class="form" method="POST" action="{{ url }}">
-          {% csrf_token %}
-          <div class="form-group">
-            <label class="form-label" for="user">User:</label>
-            <input class="form-input" type="text" name="user" id="user">
-          </div>
-          <div class="form-group">
-            <button class="btn btn-primary" type="submit">Submit</button>
-          </div>
-        </form>
-      </section>
     </main>
     <footer class="footer">
       <p>&copy; 2023 {{ key.project.name }}</p>

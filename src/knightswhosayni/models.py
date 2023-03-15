@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class Project(models.Model):
@@ -35,3 +36,20 @@ class License(models.Model):
 
     def __str__(self):
         return self.user
+
+
+class Sale(models.Model):
+    create_time = models.DateTimeField(auto_now_add=True)
+    modify_time = models.DateTimeField(auto_now=True)
+    product_id = models.CharField(max_length=50)
+    sale_id = models.CharField(max_length=50)
+    payload = models.JSONField()
+    license = models.ForeignKey(License, on_delete=models.CASCADE)
+
+    def get_hours(self):
+        now = timezone.now()
+        diff = now - self.modify_time
+        return diff.total_seconds() / 60 / 60
+
+    def __str__(self):
+        return self.sale_id
