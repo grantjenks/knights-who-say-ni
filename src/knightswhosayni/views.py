@@ -74,3 +74,12 @@ def gumroad_webhook(request):
     )
     sale.save()
     return HttpResponse('OK')
+
+
+def view_email(request, sale_id):
+    sale = get_object_or_404(Sale, sale_id=sale_id)
+    return render(
+        request,
+        'knightswhosayni/email.html',
+        locals(),
+    )

@@ -24,6 +24,8 @@ TODO
 
 * Send an email with the sale details.
 
+* Support customization of the project logo.
+
 * Provide reusable GitHub workflow for testing and releasing code.
 
 * Add license legal details to template.
