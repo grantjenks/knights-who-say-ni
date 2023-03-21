@@ -6,6 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ key.project.name }}</title>
     <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
+    <style>
+     .dot-typing {
+         position: relative;
+         left: -9999px;
+         width: 10px;
+         height: 10px;
+         border-radius: 5px;
+         background-color: #808080;
+         color: #808080;
+         box-shadow: 9984px 0 0 0 #808080, 9999px 0 0 0 #808080, 10014px 0 0 0 #808080;
+         animation: dot-typing 1.6s infinite linear;
+     }
+
+     @keyframes dot-typing {
+         0% {
+             box-shadow: 9984px 0 0 0 #808080, 9999px 0 0 0 #808080, 10014px 0 0 0 #808080;
+         }
+         16.667% {
+             box-shadow: 9984px -10px 0 0 #808080, 9999px 0 0 0 #808080, 10014px 0 0 0 #808080;
+         }
+         33.333% {
+             box-shadow: 9984px 0 0 0 #808080, 9999px 0 0 0 #808080, 10014px 0 0 0 #808080;
+         }
+         50% {
+             box-shadow: 9984px 0 0 0 #808080, 9999px -10px 0 0 #808080, 10014px 0 0 0 #808080;
+         }
+         66.667% {
+             box-shadow: 9984px 0 0 0 #808080, 9999px 0 0 0 #808080, 10014px 0 0 0 #808080;
+         }
+         83.333% {
+             box-shadow: 9984px 0 0 0 #808080, 9999px 0 0 0 #808080, 10014px -10px 0 0 #808080;
+         }
+         100% {
+             box-shadow: 9984px 0 0 0 #808080, 9999px 0 0 0 #808080, 10014px 0 0 0 #808080;
+         }
+     }
+    </style>
   </head>
   <body>
     <header>
@@ -57,6 +94,7 @@ from {{ key.prefix|lower }}license import {{ key.project.module_name }}
         </pre>
         </section>
         <hr>
+          <div class="dot-typing" style="margin: 0 auto"></div>
       {% endif %}
       <h1>Buy a Software License for {{ key.project.name }}</h1>
       <p>What, this costs money? Yes, but it's quick and painless.</p>
