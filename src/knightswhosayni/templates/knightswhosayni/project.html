@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ key.project.name }}</title>
     <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
+    <script src="https://unpkg.com/htmx.org@1.8.6" integrity="sha384-Bj8qm/6B+71E6FQSySofJOUjA/gq330vEqjFx9LakWybUySyI1IQHwPtbTU7bNwx" crossorigin="anonymous"></script>
     <style>
      .dot-typing {
          position: relative;
@@ -94,7 +95,22 @@ from {{ key.prefix|lower }}license import {{ key.project.module_name }}
         </pre>
         </section>
         <hr>
+      {% elif sale_id is not None %}
+        <div hx-get="{{ url }}"
+             hx-trigger="load delay:1.5s"
+             hx-swap="outerHTML"
+             hx-target="body"
+        >
+          <h1>Processing sale ...</h1>
           <div class="dot-typing" style="margin: 0 auto"></div>
+          <p>
+            Sales typically process in less than a minute. Questions regarding the sale? Contact
+            <a href="mailto:{{ key.project.contact_email }}?subject=Missing License Code for {{ key.project.name }} Sale {{ sale_id }}&body=Please include the project name, {{ key.project.name }}, and sale id, {{ sale_id }}, in the message.">
+              {{ key.project.contact_name }}
+            </a>
+          </p>
+          <hr>
+        </div>
       {% endif %}
       <h1>Buy a Software License for {{ key.project.name }}</h1>
       <p>What, this costs money? Yes, but it's quick and painless.</p>
