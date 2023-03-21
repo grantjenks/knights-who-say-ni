@@ -93,6 +93,12 @@ import {{ key.project.module_name }}  # isort: skip
 from {{ key.prefix|lower }}license import {{ key.project.module_name }}
           </code>
         </pre>
+        <p>
+          Questions regarding the sale? Contact
+          <a href="mailto:{{ key.project.contact_email }}?subject=Change License User for {{ key.project.name }} Sale {{ sale_id }}&body=Please include the project name, {{ key.project.name }}, and sale id, {{ sale_id }}, in the message.">
+            {{ key.project.contact_name }}
+          </a>
+        </p>
         </section>
         <hr>
       {% elif sale_id is not None %}
