@@ -8,6 +8,8 @@ class Project(models.Model):
     name = models.CharField(max_length=100)
     slug = models.CharField(max_length=100)
     module_name = models.CharField(max_length=100)
+    contact_name = models.CharField(max_length=100)
+    contact_email = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
