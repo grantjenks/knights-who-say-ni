@@ -25,11 +25,9 @@ def view_key(request, slug):
 
 def buy_license(request, key):
     url = request.get_full_path()
+    product_id = request.GET.get('product_id', '')
+    sale_id = request.GET.get('sale_id', '')
     if request.method == 'GET':
-        product_id = request.GET.get('product_id', '')
-        sale_id = request.GET.get('sale_id', '')
-        sale = Sale.objects.filter(product_id=product_id, sale_id=sale_id).first()
-        license = sale.license if sale else None
         sale = Sale.objects.filter(
             product_id=product_id,
             sale_id=sale_id,
