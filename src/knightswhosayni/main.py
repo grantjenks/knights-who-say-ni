@@ -22,9 +22,7 @@ $ knightswhosayni delete-gumroad Ufqct5DQzP0s8w70vqOOCw==
 
 TODO
 
-* If the sale webhook hasn't triggered yet then post a waiting message.
-
-* If the sale occurred more than an hour ago, then post contact info.
+* Send an email with the sale details.
 
 * Provide reusable GitHub workflow for testing and releasing code.
 
