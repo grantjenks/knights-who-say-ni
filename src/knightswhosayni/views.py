@@ -58,10 +58,12 @@ def buy_license(request, key):
 @require_POST
 def gumroad_webhook(request):
     payload = dict(request.POST)
-    product_permalink, = payload['product_permalink']
-    license_user, = payload['url_params[license_user]']
-    product_id, = payload['product_id']
-    sale_id, = payload['sale_id']
+    payload = {key: value for key, (value,) in payload.items()}
+    product_permalink = payload['product_permalink']
+    license_user = payload.get('url_params[license_user]')
+    license_user = license_user or payload['email']
+    product_id = payload['product_id']
+    sale_id = payload['sale_id']
     key = Key.objects.get(gumroad_link=product_permalink)
     code = str(keygen(key.value, license_user, days=0))
     license = License(key=key, user=license_user, code=code, days=0)
