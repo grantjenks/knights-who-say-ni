@@ -3,6 +3,7 @@ import json
 
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
@@ -29,6 +30,12 @@ def buy_license(request, key):
         sale_id = request.GET.get('sale_id', '')
         sale = Sale.objects.filter(product_id=product_id, sale_id=sale_id).first()
         license = sale.license if sale else None
+        sale = Sale.objects.filter(
+            product_id=product_id,
+            sale_id=sale_id,
+            modify_time__gt=timezone.now() - dt.timedelta(hours=1),
+        ).first()
+        license = sale and sale.license
     elif request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
