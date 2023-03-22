@@ -101,7 +101,7 @@ from {{ key.prefix|lower }}license import {{ key.project.module_name }}
         </p>
         </section>
         <hr>
-      {% elif sale_id is not None %}
+      {% elif sale_id %}
         <div hx-get="{{ url }}"
              hx-trigger="load delay:1.5s"
              hx-swap="outerHTML"
