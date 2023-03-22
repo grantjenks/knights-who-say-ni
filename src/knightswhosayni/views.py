@@ -1,8 +1,10 @@
 import datetime as dt
 import json
 
+from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -73,6 +75,14 @@ def gumroad_webhook(request):
         license=license,
     )
     sale.save()
+    html = render_to_string('knightswhosayni/email.html', {'sale': sale})
+    send_mail(
+        f'{sale.license.key.project.name} Software License Receipt',
+        '',
+        'contact@grantjenks.com',
+        ['grant.jenks@gmail.com'],
+        html_message=html,
+    )
     return HttpResponse('OK')
 
 
