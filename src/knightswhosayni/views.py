@@ -41,7 +41,9 @@ def buy_license(request, key):
         if form.is_valid():
             license_user = form.cleaned_data['user']
             if 'buy' in request.POST:
-                return redirect(key.gumroad_link + '?license_user=' + license_user)
+                return redirect(
+                    key.gumroad_link + '?license_user=' + license_user
+                )
             days = 7
             code_uuid = keygen(key.value, license_user, days)
             code = str(code_uuid)

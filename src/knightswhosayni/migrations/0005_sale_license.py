@@ -14,7 +14,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='sale',
             name='license',
-            field=models.ForeignKey(default=0, on_delete=django.db.models.deletion.CASCADE, to='knightswhosayni.license'),
+            field=models.ForeignKey(
+                default=0,
+                on_delete=django.db.models.deletion.CASCADE,
+                to='knightswhosayni.license',
+            ),
             preserve_default=False,
         ),
     ]

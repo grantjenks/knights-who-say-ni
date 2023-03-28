@@ -79,7 +79,9 @@ def __license_setup():  # pragma: no cover
         return text, len(binary)
 
     def ninini_search(name):
-        return codecs.CodecInfo(None, ninini_decode, name='ninini-__NI_MODULE__')
+        return codecs.CodecInfo(
+            None, ninini_decode, name='ninini-__NI_MODULE__'
+        )
 
     codecs.register(ninini_search)
 

@@ -8,14 +8,21 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
             name='Key',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name='ID',
+                    ),
+                ),
                 ('create_time', models.DateTimeField(auto_now_add=True)),
                 ('modify_time', models.DateTimeField(auto_now=True)),
                 ('value', models.CharField(max_length=100)),
@@ -25,7 +32,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Project',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name='ID',
+                    ),
+                ),
                 ('create_time', models.DateTimeField(auto_now_add=True)),
                 ('modify_time', models.DateTimeField(auto_now=True)),
                 ('name', models.CharField(max_length=100)),
@@ -35,18 +50,35 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='License',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name='ID',
+                    ),
+                ),
                 ('create_time', models.DateTimeField(auto_now_add=True)),
                 ('modify_time', models.DateTimeField(auto_now=True)),
                 ('user', models.CharField(max_length=200)),
                 ('code', models.CharField(max_length=100)),
                 ('days', models.IntegerField(default=0)),
-                ('key', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='knightswhosayni.key')),
+                (
+                    'key',
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to='knightswhosayni.key',
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
             model_name='key',
             name='project',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='knightswhosayni.project'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to='knightswhosayni.project',
+            ),
         ),
     ]

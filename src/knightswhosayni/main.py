@@ -91,15 +91,14 @@ def transform(src_dir, name, prefix):
     init_template = (parent_dir / 'template_init.py').read_text()
     init_template = init_template.replace('__NI_MODULE__', name)
     init_template = (
-        init_template
-        .replace('__NI_MODULE__', name)
+        init_template.replace('__NI_MODULE__', name)
         .replace('__NI_PREFIX__', prefix)
         .replace('__NI_PREFIX_LOWER__', prefix.lower())
         .replace('__NI_PREFIX_STRIP__', prefix.rstrip('_'))
     )
 
     # Inject codecs code into __init__.py
-    init_path = (src_dir / name / '__init__.py')
+    init_path = src_dir / name / '__init__.py'
     init_text = init_path.read_text()
     init_lines = init_text.split('\n')
     index = init_lines.index('"""') + 1
@@ -134,7 +133,7 @@ def ninini_encode(binary, key_bytes):
         chars.append(code)
     enc_bytes = bytes(chars)
     offsets = range(0, len(bin64), 79)
-    lines = [enc_bytes[offset:offset + 79] + b'\n' for offset in offsets]
+    lines = [enc_bytes[offset : offset + 79] + b'\n' for offset in offsets]
     output = b''.join(lines)
     return output
 
@@ -169,7 +168,9 @@ def list_gumroad():
 
 
 def delete_gumroad(resource_id):
-    endpoint = f'https://api.gumroad.com/v2/resource_subscriptions/{resource_id}'
+    endpoint = (
+        f'https://api.gumroad.com/v2/resource_subscriptions/{resource_id}'
+    )
     payload = {
         'access_token': os.environ['GUMROAD_ACCESS_TOKEN'],
     }
