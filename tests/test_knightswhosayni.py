@@ -1,4 +1,5 @@
 import pytest
+
 from knightswhosayni.models import Key, License, Project
 
 
