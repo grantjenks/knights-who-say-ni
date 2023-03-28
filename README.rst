@@ -1,4 +1,6 @@
-# Knights Who Say Ni
+==================
+Knights Who Say Ni
+==================
 
 Ni! Ni! Ni!
 
@@ -26,10 +28,12 @@ $ twine upload dist/*
 ```
 
 
-## License Users
+License Users
+=============
 
 
-### Option 1: Using Code
+Option 1: Using Code
+--------------------
 
 ```python
 import builtins
@@ -38,7 +42,8 @@ builtins.[prefix]LICENSE_CODE = '[license code]'
 ```
 
 
-### Option 2: Using Environment Variables
+Option 2: Using Environment Variables
+-------------------------------------
 
 ```bash
 export [prefix]LICENSE_USER=[username]
@@ -46,7 +51,8 @@ export [prefix]LICENSE_CODE=[license code]
 ```
 
 
-### Option 3: Using License File
+Option 3: Using License File
+----------------------------
 
 ```config
 # [prefix.lower()]license.ini
@@ -56,7 +62,8 @@ LICENSE_CODE=[license code]
 ```
 
 
-### Example
+Example
+-------
 
 Given:
 
@@ -83,7 +90,8 @@ LICENSE_CODE=e385cf4c-be9a-4389-82ba-bfa85b8ad17c
 ```
 
 
-## Caveats
+Caveats
+=======
 
 Maybe this package is a bad idea. But here's how I got here:
 
