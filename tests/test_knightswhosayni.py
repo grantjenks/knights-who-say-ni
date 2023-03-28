@@ -1,6 +1,8 @@
+import pytest
 from knightswhosayni.models import Key, License, Project
 
 
+@pytest.mark.django_db
 def test_ni():
     project = Project(name='Django Rrweb', slug='django-rrweb')
     project.save()
