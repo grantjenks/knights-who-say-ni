@@ -13,19 +13,16 @@ Ni! Ni! Ni!
 4. Configure software with username and license code.
 
 
-## Quick Start
+Quick Start
+===========
 
-```bash
-$ pip install knightswhosayni
+.. code::
 
-$ python -m knightswhosayni.main [path/to/src] [module-name] [prefix] [license-key]
-
-$ tox -e py
-
-$ python -m build
-
-$ twine upload dist/*
-```
+   $ pip install knightswhosayni
+   $ python -m knightswhosayni.main [path/to/src] [module-name] [prefix] [license-key]
+   $ tox -e py
+   $ python -m build
+   $ twine upload dist/*
 
 
 License Users
@@ -35,31 +32,31 @@ License Users
 Option 1: Using Code
 --------------------
 
-```python
-import builtins
-builtins.[prefix]LICENSE_USER = '[username]'
-builtins.[prefix]LICENSE_CODE = '[license code]'
-```
+.. code::
+
+   import builtins
+   builtins.[prefix]LICENSE_USER = '[username]'
+   builtins.[prefix]LICENSE_CODE = '[license code]'
 
 
 Option 2: Using Environment Variables
 -------------------------------------
 
-```bash
-export [prefix]LICENSE_USER=[username]
-export [prefix]LICENSE_CODE=[license code]
-```
+.. code::
+
+   export [prefix]LICENSE_USER=[username]
+   export [prefix]LICENSE_CODE=[license code]
 
 
 Option 3: Using License File
 ----------------------------
 
-```config
-# [prefix.lower()]license.ini
-[prefix.strip('_')]
-LICENSE_USER=[username]
-LICENSE_CODE=[license code]
-```
+.. code::
+
+   # [prefix.lower()]license.ini
+   [prefix.strip('_')]
+   LICENSE_USER=[username]
+   LICENSE_CODE=[license code]
 
 
 Example
@@ -71,23 +68,23 @@ Given:
 
 * username -- `name@example.com`
 
-```python
-import builtins
-builtins.PACKAGE_NAME_V1_LICENSE_USER = 'name@example.com'
-builtins.PACKAGE_NAME_V1_LICENSE_CODE = 'e385cf4c-be9a-4389-82ba-bfa85b8ad17c'
-```
+.. code::
 
-```bash
-export PACKAGE_NAME_V1_LICENSE_USER=name@example.com
-export PACKAGE_NAME_V1_LICENSE_CODE=e385cf4c-be9a-4389-82ba-bfa85b8ad17c
-```
+   import builtins
+   builtins.PACKAGE_NAME_V1_LICENSE_USER = 'name@example.com'
+   builtins.PACKAGE_NAME_V1_LICENSE_CODE = 'e385cf4c-be9a-4389-82ba-bfa85b8ad17c'
 
-```config
-# package_name_v1_license.ini
-[PACKAGE_NAME_V1]
-LICENSE_USER=name@example.com
-LICENSE_CODE=e385cf4c-be9a-4389-82ba-bfa85b8ad17c
-```
+.. code::
+
+   export PACKAGE_NAME_V1_LICENSE_USER=name@example.com
+   export PACKAGE_NAME_V1_LICENSE_CODE=e385cf4c-be9a-4389-82ba-bfa85b8ad17c
+
+.. code::
+
+   # package_name_v1_license.ini
+   [PACKAGE_NAME_V1]
+   LICENSE_USER=name@example.com
+   LICENSE_CODE=e385cf4c-be9a-4389-82ba-bfa85b8ad17c
 
 
 Caveats
