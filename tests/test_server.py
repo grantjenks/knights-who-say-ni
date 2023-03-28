@@ -1,5 +1,4 @@
-from knightswhosayni.models import Project, Key, License
-
+from knightswhosayni.models import Key, License, Project
 
 project = Project(name='Django Rrweb', slug='django-rrweb')
 project.save()

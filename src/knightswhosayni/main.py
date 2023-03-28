@@ -40,8 +40,9 @@ import os
 import pathlib
 import pprint
 import random
-import requests
 import uuid
+
+import requests
 
 from . import utils
 

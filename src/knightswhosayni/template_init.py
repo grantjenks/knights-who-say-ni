@@ -1,9 +1,9 @@
 def __license_setup():  # pragma: no cover
     import base64
     import codecs
-    import datetime
     import configparser
     import contextlib
+    import datetime
     import hashlib
     import itertools
     import os

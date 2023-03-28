@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Project, Key, License, Sale
+
+from .models import Key, License, Project, Sale
 
 
 class ProjectAdmin(admin.ModelAdmin):
