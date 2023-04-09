@@ -25,6 +25,8 @@ TODO
 * Add license legal details to template.
 
 * Provide reusable GitHub workflow for testing and releasing code.
+
+* Add some tests and stamp it v1
 """
 
 import argparse
