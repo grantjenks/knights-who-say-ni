@@ -48,7 +48,7 @@
   <body>
     <header>
       <nav>
-        <a href="/"><img alt="Knights Who Say Ni" src="{% static 'knightswhosayni.png' %}" height="80"></a>
+        <a href="/"><img alt="Knights Who Say Ni" src="{% if key.project.logo %}{{ key.project.logo.url }}{% else %}{% static 'knightswhosayni.png' %}{% endif %}" height="80"></a>
         <ul>
           <li>{{ key.project.name }}</li>
         </ul>

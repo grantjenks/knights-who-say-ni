@@ -22,8 +22,6 @@ $ knightswhosayni delete-gumroad Ufqct5DQzP0s8w70vqOOCw==
 
 TODO
 
-* Support customization of the project logo.
-
 * Add license legal details to template.
 
 * Provide reusable GitHub workflow for testing and releasing code.
